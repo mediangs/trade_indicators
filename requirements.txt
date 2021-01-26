@@ -1,3 +1,4 @@
+finance-datareader==0.9.14
 pandas==1.2.1
 bokeh==2.2.3
 streamlit==0.75.0
