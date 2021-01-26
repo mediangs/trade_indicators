@@ -1,5 +1,3 @@
-streamlit
-finance-datareader
-beautifulsoup4
-bokeh
-pandas
+pandas==1.2.1
+bokeh==2.2.3
+streamlit==0.75.0
