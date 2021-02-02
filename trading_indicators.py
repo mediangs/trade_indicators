@@ -1,4 +1,4 @@
-
+# -*- coding: cp949 -*-
 import FinanceDataReader as fdr
 from datetime import date
 import pandas as pd
@@ -16,7 +16,7 @@ def pct_change(x):
 
 def is_unrate_increased_to_point(x):
     """
-    (1ë…„)ì „ì‹œì ê³¼ í˜„ì¬ì‹œì ì˜ ì‹¤ì—…ìœ¨ ë¹„êµ
+    (1³â)Àü½ÃÁ¡°ú ÇöÀç½ÃÁ¡ÀÇ ½Ç¾÷À² ºñ±³
     """
     first, last = x.iloc[0], x.iloc[-1]
     return first < last
@@ -24,7 +24,7 @@ def is_unrate_increased_to_point(x):
 
 def is_unrate_increased_to_mean(x):
     """
-    ìµœê·¼ (1ë…„)ì˜ í‰ê· ê³¼ í˜„ì¬ì‹œì ì˜ ì‹¤ì—…ìœ¨ ë¹„êµ
+    ÃÖ±Ù (1³â)ÀÇ Æò±Õ°ú ÇöÀç½ÃÁ¡ÀÇ ½Ç¾÷À² ºñ±³
     """
 
     first, last = x.iloc[0], x.iloc[-1]
@@ -55,16 +55,16 @@ def keller_is_bull_market(is_unrate_increase, momentums):
     is_all_positive_km = all(m > 0 for m in momentums)
     if echo: print('===== Canary Indicator =====')
     if is_unrate_increase:
-        if echo: print('1. ì‘ë…„ì— ë¹„í•´ ì‹¤ì—…ìœ¨ì´ ë†’ìŒ --> VWO/BND í™•ì¸')
+        if echo: print('1. ÀÛ³â¿¡ ºñÇØ ½Ç¾÷À²ÀÌ ³ôÀ½ --> VWO/BND È®ÀÎ')
 
         if is_all_positive_km:
-            if echo: print('2. VWO/BND ëª¨ë‘ ì–‘ìˆ˜ --> ì£¼ì‹ì— íˆ¬ì')
+            if echo: print('2. VWO/BND ¸ğµÎ ¾ç¼ö --> ÁÖ½Ä¿¡ ÅõÀÚ')
             return True
         else:
-            if echo: print('2. VWO/BND ëª¨ë‘ ì–‘ìˆ˜ ì•„ë‹˜ --> ì±„ê¶Œì— íˆ¬ì')
+            if echo: print('2. VWO/BND ¸ğµÎ ¾ç¼ö ¾Æ´Ô --> Ã¤±Ç¿¡ ÅõÀÚ')
             return False
     else:
-        if echo: print('1. ì‘ë…„ì— ë¹„í•´ ì‹¤ì—…ìœ¨ì´ ë‚®ìŒ --> ì£¼ì‹ì— íˆ¬ì')
+        if echo: print('1. ÀÛ³â¿¡ ºñÇØ ½Ç¾÷À²ÀÌ ³·À½ --> ÁÖ½Ä¿¡ ÅõÀÚ')
         return True
 
 @st.cache
