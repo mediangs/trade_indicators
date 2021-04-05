@@ -3,9 +3,8 @@ import FinanceDataReader as fdr
 from datetime import date
 import pandas as pd
 import streamlit as st
-from bokeh.plotting import figure
-from bokeh.models import LinearAxis, Range1d, Legend, LegendItem
-from bokeh import palettes
+from plot_tools import bokeh_multiline
+
 
 def pct_change(x):
     first, last = x.iloc[0], x.iloc[-1]
@@ -131,35 +130,6 @@ def moving_average_indicator(stock_data, unrate):
 
     df['bull_market'] = df.apply(lambda x: int(ma_is_bull_market(x['UNRATE'], x[c_name] > x['200MA'])), axis=1)
     return df
-
-
-def bokeh_multiline(df, col_secondary):
-    col_primary = list(set(df.columns) - set(col_secondary))
-    df_secondary, df_primary = df[col_secondary], df[col_primary]
-    len_secondary, len_primary = len(df_secondary.columns), len(df_primary.columns)
-    palette = palettes.Category10_5[:len(df.columns)]
-
-    p = figure(x_axis_type="datetime", plot_width=800, plot_height=300)
-    p.extra_y_ranges = {"foo": Range1d(start=-3, end=3)}
-    # Adding the second axis to the plot.
-    p.add_layout(LinearAxis(y_range_name="foo"), 'right')
-
-    l1 = p.multi_line(xs=[df_secondary.index] * len_secondary,
-                      ys=[df_secondary[col] for col in df_secondary.columns], line_width=2,
-                      y_range_name="foo", line_color=palette[:len_secondary])
-
-    l2 = p.multi_line(xs=[df_primary.index] * len_primary,
-                      ys=[df_primary[col] for col in df_primary.columns], line_width=2,
-                      line_color=palette[len_secondary:])
-
-    items2 = [LegendItem(label=name, renderers=[l1], index=i)
-              for i, name in enumerate(df_secondary.columns)]
-    items1 = [LegendItem(label=name, renderers=[l2], index=i)
-              for i, name in enumerate(df_primary.columns)]
-
-    p.add_layout(Legend(items = items1+items2))
-
-    return p
 
 
 def indicator_plot(df, start, end, title, secondary_y=False):
